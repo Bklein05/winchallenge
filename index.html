@@ -16,9 +16,9 @@
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const URL="https://czbhvqttfuxdtpkplvku.supabase.co";
+const SUPABASE_URL="https://czbhvqttfuxdtpkplvku.supabase.co";
 const KEY="sb_publishable_mpGdooKTnJEaJUVUezE_QA_im9_rS-a";
-const db=window.supabase.createClient(URL,KEY),$=id=>document.getElementById(id);
+const db=window.supabase.createClient(SUPABASE_URL,KEY),$=id=>document.getElementById(id);
 const defaults=()=>({teamAName:"Team 1",teamBName:"Team 2",aP1:"",aP2:"",bP1:"",bP2:"",games:[],teamGames:[{name:"Teamgame 1",winner:""},{name:"Teamgame 2",winner:""}]});
 let s=defaults(),user=null,channel=null,timer=null,loading=false,last="";
 function esc(x){return String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
