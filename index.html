@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2v2 Winchallenge</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#141c31;--panel2:#1b2640;--text:#eef3ff;--muted:#9aa9c7;--accent:#8b5cf6;--accent2:#22d3ee;--good:#34d399;--line:#2b3856}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1b2450 0%,var(--bg) 55%);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);min-height:100vh}
+header{padding:32px 18px 20px;text-align:center}header .eyebrow{color:var(--accent2);font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800}h1{font-size:clamp(2rem,6vw,3.4rem);margin:8px 0;background:linear-gradient(90deg,#c4b5fd,#67e8f9);color:transparent;background-clip:text}header p{color:var(--muted);margin:0}
+main{max-width:1100px;margin:auto;padding:0 16px 40px;display:grid;gap:18px}.panel{background:linear-gradient(145deg,rgba(25,35,60,.97),rgba(17,24,42,.97));border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 12px 35px #0002}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}h2{margin:0 0 14px;font-size:1.2rem}h3{margin:0 0 8px;font-size:1rem}.teams{display:grid;grid-template-columns:1fr 1fr;gap:14px}.team{background:var(--panel2);border:1px solid var(--line);padding:16px;border-radius:14px}.team.a{border-top:3px solid var(--accent)}.team.b{border-top:3px solid var(--accent2)}.team label{display:block;color:var(--muted);font-size:.8rem;margin:12px 0 5px}input,select,button{font:inherit}input[type=text],input[type=number],select{width:100%;background:#0c1325;border:1px solid #34415f;border-radius:9px;padding:10px 11px;color:var(--text);outline:none}input:focus,select:focus{border-color:var(--accent2)}.players{display:grid;grid-template-columns:1fr 1fr;gap:8px}.add-row{display:flex;gap:8px;margin-top:12px}.add-row input{flex:1;min-width:0}button{border:0;border-radius:10px;padding:10px 14px;background:var(--accent);color:white;font-weight:750;cursor:pointer;transition:transform .12s,opacity .12s}button:hover{opacity:.9;transform:translateY(-1px)}button.secondary{background:#2b3856}button.danger{background:#713344;padding:6px 9px;font-size:.85rem}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.stat{background:#0d1528;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}.stat strong{display:block;font-size:1.5rem}.stat span{font-size:.8rem;color:var(--muted)}.progress{height:8px;background:#28334d;border-radius:999px;overflow:hidden;margin-top:12px}.progress div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .2s}
+.games-layout{display:grid;grid-template-columns:1fr 1fr;gap:14px}.team-games{background:#0d1528;border:1px solid var(--line);border-radius:13px;padding:14px}.team-games.a{border-top:2px solid var(--accent)}.team-games.b{border-top:2px solid var(--accent2)}.game-list{display:grid;gap:8px;margin-top:12px}.game-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;background:#18233b;border:1px solid #2a3755;border-radius:10px;padding:10px}.game-row input[type=checkbox]{width:19px;height:19px;accent-color:var(--good)}.game-row.done .game-name{text-decoration:line-through;color:#91a1bc}.game-name{overflow-wrap:anywhere}.empty{color:var(--muted);font-size:.9rem;padding:12px 2px}.teamgame-row{display:grid;grid-template-columns:1fr minmax(170px,240px);align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.teamgame-row:last-child{border-bottom:0}.hint{color:var(--muted);font-size:.88rem;line-height:1.5}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.small{font-size:.8rem;color:var(--muted)}footer{text-align:center;color:var(--muted);font-size:.8rem;padding:0 16px 28px}
+@media(max-width:700px){.teams,.games-layout{grid-template-columns:1fr}.teamgame-row{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.panel{padding:15px}.teamgame-row select{max-width:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Squad vs Squad · 2v2</div>
+  <h1>WINCHALLENGE</h1>
+  <p>Eure Challenge. Eure Regeln. Euer Scoreboard.</p>
+</header>
+<main>
+<section class="panel">
+  <div class="section-head"><h2>⚡ Teams & Spieler</h2><button class="secondary" id="resetTeams">Namen zurücksetzen</button></div>
+  <div class="teams">
+    <div class="team a">
+      <h3 id="teamATitle">TEAM 1</h3>
+      <label for="teamAName">Teamname</label><input id="teamAName" type="text" value="Team 1" maxlength="40">
+      <div class="players"><div><label for="aP1">Spieler 1</label><input id="aP1" type="text" placeholder="Name eintragen" maxlength="40"></div><div><label for="aP2">Spieler 2</label><input id="aP2" type="text" placeholder="Name eintragen" maxlength="40"></div></div>
+    </div>
+    <div class="team b">
+      <h3 id="teamBTitle">TEAM 2</h3>
+      <label for="teamBName">Teamname</label><input id="teamBName" type="text" value="Team 2" maxlength="40">
+      <div class="players"><div><label for="bP1">Spieler 1</label><input id="bP1" type="text" placeholder="Name eintragen" maxlength="40"></div><div><label for="bP2">Spieler 2</label><input id="bP2" type="text" placeholder="Name eintragen" maxlength="40"></div></div>
+    </div>
+  </div>
+</section>
+<section class="panel">
+  <div class="section-head"><h2>🎮 Spiele-Challenge</h2><span class="small">Jedes Team hakt separat ab</span></div>
+  <p class="hint">Tragt Spiele einzeln ein. Jedes Spiel erscheint automatisch bei beiden Teams, und beide Teams können ihren Fortschritt unabhängig abhaken.</p>
+  <form class="add-row" id="gameForm"><input id="gameInput" type="text" placeholder="Neues Spiel eintragen …" maxlength="100" required><button type="submit">+ Spiel hinzufügen</button></form>
+  <div class="games-layout" style="margin-top:16px">
+    <div class="team-games a"><h3 id="gamesATitle">Team 1 – Spiele</h3><div class="small" id="gamesAProgress">0 / 0 erledigt</div><div class="progress"><div id="barA"></div></div><div class="game-list" id="gamesA"><div class="empty">Noch keine Spiele eingetragen.</div></div></div>
+    <div class="team-games b"><h3 id="gamesBTitle">Team 2 – Spiele</h3><div class="small" id="gamesBProgress">0 / 0 erledigt</div><div class="progress"><div id="barB"></div></div><div class="game-list" id="gamesB"><div class="empty">Noch keine Spiele eingetragen.</div></div></div>
+  </div>
+</section>
+<section class="panel">
+  <div class="section-head"><h2>🏆 Teamgames</h2><span class="small">Genau zwei besondere Matches</span></div>
+  <p class="hint">Tragt bei jedem Teamgame den Gewinner ein. Ergebnisse lassen sich jederzeit ändern.</p>
+  <div id="teamGameRows"></div>
+</section>
+<section class="panel">
+  <div class="section-head"><h2>📊 Gesamtübersicht</h2><div class="toolbar"><button class="secondary" id="exportBtn">Daten exportieren</button><button class="secondary" id="importBtn">Daten importieren</button><button class="danger" id="clearBtn">Alles löschen</button><input id="importFile" type="file" accept="application/json" hidden></div></div>
+  <div class="stats"><div class="stat"><strong id="statGames">0</strong><span>Spiele insgesamt</span></div><div class="stat"><strong id="statDone">0</strong><span>Abgehakt insgesamt</span></div><div class="stat"><strong id="statWins">0 : 0</strong><span>Teamgame-Siege</span></div></div>
+  <p class="hint" id="summaryText" style="margin-bottom:0">Tragt eure Spiele ein, um loszulegen.</p>
+</section>
+<section class="panel">
+  <h2>💾 Eure Daten</h2>
+  <p class="hint">Diese erste Version speichert Änderungen automatisch in diesem Browser auf diesem Gerät. Über „Daten exportieren“ und „Daten importieren“ könnt ihr den aktuellen Stand zwischen Geräten austauschen. Für gleichzeitige Live-Bearbeitung durch alle vier braucht die Website später noch eine gemeinsame Online-Datenbank.</p>
+</section>
+</main>
+<footer>WINCHALLENGE · Fortschritt wird automatisch lokal gespeichert</footer>
+<script>
+const $ = id => document.getElementById(id);
+const defaultState = () => ({
+ teamAName:'Team 1',teamBName:'Team 2',aP1:'',aP2:'',bP1:'',bP2:'',
+ games:[],teamGames:[{name:'Teamgame 1',winner:''},{name:'Teamgame 2',winner:''}]
+});
+let state;
+try { state = JSON.parse(localStorage.getItem('winchallenge-state')) || defaultState(); } catch { state = defaultState(); }
+function save(){ localStorage.setItem('winchallenge-state',JSON.stringify(state)); render(); }
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function initInputs(){
+ ['teamAName','teamBName','aP1','aP2','bP1','bP2'].forEach(id=>{ $(id).value=state[id]??''; $(id).addEventListener('input',e=>{state[id]=e.target.value; localStorage.setItem('winchallenge-state',JSON.stringify(state)); renderNames();}); });
+}
+function renderNames(){
+ $('teamATitle').textContent=(state.teamAName||'Team 1').toUpperCase();
+ $('teamBTitle').textContent=(state.teamBName||'Team 2').toUpperCase();
+ $('gamesATitle').textContent=(state.teamAName||'Team 1')+' – Spiele';
+ $('gamesBTitle').textContent=(state.teamBName||'Team 2')+' – Spiele';
+}
+function renderGames(team){
+ const list=$(team==='A'?'gamesA':'gamesB'); list.innerHTML='';
+ if(!state.games.length){list.innerHTML='<div class="empty">Noch keine Spiele eingetragen.</div>';return;}
+ state.games.forEach((g,i)=>{
+  const done=team==='A'?g.a:g.b;
+  const row=document.createElement('div'); row.className='game-row'+(done?' done':'');
+  row.innerHTML=`<input type="checkbox" aria-label="${escapeHtml(g.name)} erledigt" ${done?'checked':''}><span class="game-name">${escapeHtml(g.name)}</span><button class="danger" title="Spiel entfernen" aria-label="Spiel entfernen">✕</button>`;
+  row.querySelector('input').addEventListener('change',e=>{if(team==='A')g.a=e.target.checked;else g.b=e.target.checked;save();});
+  row.querySelector('button').addEventListener('click',()=>{if(confirm('„'+g.name+'“ aus der Challenge entfernen?')){state.games.splice(i,1);save();}});
+  list.appendChild(row);
+ });
+}
+function renderTeamGames(){
+ const wrap=$('teamGameRows');wrap.innerHTML='';
+ state.teamGames.forEach((g,i)=>{
+  const row=document.createElement('div');row.className='teamgame-row';
+  row.innerHTML=`<div><input type="text" aria-label="Name Teamgame ${i+1}" value="${escapeHtml(g.name)}" maxlength="100"><div class="small">Match ${i+1}</div></div><select aria-label="Gewinner Teamgame ${i+1}"><option value="">Noch offen</option><option value="A">${escapeHtml(state.teamAName||'Team 1')} gewinnt</option><option value="B">${escapeHtml(state.teamBName||'Team 2')} gewinnt</option><option value="draw">Unentschieden</option></select>`;
+  const nameInput=row.querySelector('input');nameInput.addEventListener('change',()=>{g.name=nameInput.value.trim()||'Teamgame '+(i+1);save();});
+  const select=row.querySelector('select');select.value=g.winner||'';select.addEventListener('change',()=>{g.winner=select.value;save();});
+  wrap.appendChild(row);
+ });
+}
+function render(){
+ renderNames();renderGames('A');renderGames('B');renderTeamGames();
+ const total=state.games.length, a=state.games.filter(g=>g.a).length,b=state.games.filter(g=>g.b).length,done=a+b;
+ $('gamesAProgress').textContent=`${a} / ${total} erledigt`;$('gamesBProgress').textContent=`${b} / ${total} erledigt`;
+ $('barA').style.width=(total?a/total*100:0)+'%';$('barB').style.width=(total?b/total*100:0)+'%';
+ $('statGames').textContent=total;$('statDone').textContent=done;
+ const winsA=state.teamGames.filter(g=>g.winner==='A').length,winsB=state.teamGames.filter(g=>g.winner==='B').length;
+ $('statWins').textContent=winsA+' : '+winsB;
+ $('summaryText').textContent=total?`${state.teamAName||'Team 1'}: ${a}/${total} Spiele erledigt · ${state.teamBName||'Team 2'}: ${b}/${total} Spiele erledigt. ${state.teamGames.filter(g=>g.winner).length} von 2 Teamgames entschieden.`:'Tragt eure Spiele ein, um loszulegen.';
+}
+$('gameForm').addEventListener('submit',e=>{e.preventDefault();const name=$('gameInput').value.trim();if(!name)return;state.games.push({name,a:false,b:false});$('gameInput').value='';save();});
+$('resetTeams').addEventListener('click',()=>{if(!confirm('Teamnamen und Spielernamen zurücksetzen?'))return;state.teamAName='Team 1';state.teamBName='Team 2';state.aP1=state.aP2=state.bP1=state.bP2='';['teamAName','teamBName','aP1','aP2','bP1','bP2'].forEach(id=>$(id).value=state[id]);save();});
+$('exportBtn').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='winchallenge-daten.json';a.click();URL.revokeObjectURL(a.href);});
+$('importBtn').addEventListener('click',()=>$('importFile').click());
+$('importFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const imported=JSON.parse(await f.text());if(!Array.isArray(imported.games)||!Array.isArray(imported.teamGames))throw new Error();state={...defaultState(),...imported};save();['teamAName','teamBName','aP1','aP2','bP1','bP2'].forEach(id=>$(id).value=state[id]??'');alert('Daten importiert.');}catch{alert('Die Datei konnte nicht gelesen werden. Bitte eine zuvor exportierte Winchallenge-Datei auswählen.');}e.target.value='';});
+$('clearBtn').addEventListener('click',()=>{if(confirm('Wirklich alle Teams, Spiele und Ergebnisse löschen?')){state=defaultState();['teamAName','teamBName','aP1','aP2','bP1','bP2'].forEach(id=>$(id).value=state[id]);save();}});
+initInputs();render();
+</script>
+</body>
+</html>
